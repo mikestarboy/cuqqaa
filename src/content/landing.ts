@@ -1,5 +1,66 @@
 export type Locale = 'en' | 'tr'
 
+export type LandingContent = {
+  nav: {
+    login: string
+    signup: string
+    howItWorks: string
+  }
+  hero: {
+    title: string
+    subtitle: string
+    mini: string
+    primaryCta: string
+    secondaryCta: string
+    scroll: string
+    showcase: { title: string; detail: string }[]
+  }
+  tabs: {
+    title: string
+    items: { label: string; heading: string; description: string }[]
+  }
+  stepper: {
+    title: string
+    steps: string[]
+  }
+  ctaBand: {
+    title: string
+    subtitle: string
+    button: string
+  }
+  card: {
+    label: string
+    title: string
+    subtitle: string
+    chips: string[]
+    link: string
+  }
+  exchange: {
+    title: string
+    subtitle: string
+    sentLabel: string
+    receivedLabel: string
+    fromValue: string
+    toValue: string
+    currencies: string[]
+  }
+  testimonials: {
+    title: string
+    items: { quote: string; name: string }[]
+  }
+  finalCta: {
+    title: string
+    subtitle: string
+    primaryCta: string
+    secondaryCta: string
+  }
+  footer: {
+    tagline: string
+    links: { label: string; href: string }[]
+    meta: string
+  }
+}
+
 export const landingContent = {
   en: {
     nav: {
@@ -207,6 +268,4 @@ export const landingContent = {
       meta: '© 2025 CUQQAA. Tüm hakları saklıdır.',
     },
   },
-} as const
-
-export type LandingContent = (typeof landingContent)['en']
+} satisfies Record<Locale, LandingContent>
