@@ -111,11 +111,11 @@ onBeforeUnmount(() => {
             {{ chip }}
           </span>
         </div>
-        <a ref="linkRef" class="card-link" href="#">
+        <button ref="linkRef" class="card-link" type="button">
           {{ props.card.link }}
           <i class="fa-solid fa-arrow-right"></i>
           <span class="card-link__line"></span>
-        </a>
+        </button>
       </div>
     </div>
   </section>

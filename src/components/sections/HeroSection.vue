@@ -27,6 +27,13 @@ const layers = Array.from({ length: 9 }, (_, index) => index)
 let ctx: gsap.Context | null = null
 const showcaseIcons = ['fa-plus', 'fa-paper-plane', 'fa-right-left']
 
+const scrollToFlow = () => {
+  const target = document.querySelector('#flow')
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
 const animateTitle = () => {
   if (!titleRef.value) return
   titleRef.value.textContent = props.hero.title
@@ -220,10 +227,10 @@ const changeLocale = (next: Locale) => emit('locale-change', next)
             <i class="fa-solid fa-bolt"></i>
             {{ props.hero.primaryCta }}
           </RouterLink>
-          <a class="btn btn-ghost" href="#flow">
+          <button class="btn btn-ghost" type="button" @click="scrollToFlow">
             <i class="fa-solid fa-arrow-right"></i>
             {{ props.hero.secondaryCta }}
-          </a>
+          </button>
         </div>
       </div>
       <div class="hero__visual" aria-hidden="true">

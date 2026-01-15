@@ -818,6 +818,10 @@
     font-size: 0.95rem;
     color: rgba(249, 250, 250, 0.8);
     width: max-content;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
   }
 
   .card-link__line {
