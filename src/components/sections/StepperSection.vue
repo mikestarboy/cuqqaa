@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onBeforeUpdate, onMounted, ref } from 'vue'
+import type { VNodeRef } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { LandingContent } from '../../content/landing'
@@ -16,7 +17,7 @@ const lineRef = ref<HTMLElement | null>(null)
 const stepRefs = ref<HTMLElement[]>([])
 let ctx: gsap.Context | null = null
 
-const setStepRef = (el: Element | null) => {
+const setStepRef: VNodeRef = (el) => {
   if (el instanceof HTMLElement) stepRefs.value.push(el)
 }
 

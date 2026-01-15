@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onBeforeUpdate, onMounted, ref, watch } from 'vue'
+import type { VNodeRef } from 'vue'
 import gsap from 'gsap'
 import type { LandingContent } from '../../content/landing'
 import { drift, reveal, splitText, underlineMove } from '../../lib/gsap'
@@ -23,7 +24,7 @@ onBeforeUpdate(() => {
   tabRefs.value = []
 })
 
-const setTabRef = (el: Element | null) => {
+const setTabRef: VNodeRef = (el) => {
   if (el instanceof HTMLElement) tabRefs.value.push(el)
 }
 
