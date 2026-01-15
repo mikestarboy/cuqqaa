@@ -107,9 +107,6 @@ onMounted(() => {
       trigger: sectionEl,
       start: 'top 70%',
       end: 'bottom 20%',
-      onEnter: () => {
-        ScrollTrigger.refresh()
-      },
       onLeaveBack: resetProgress,
       onUpdate: (self) => {
         const progress = self.progress
