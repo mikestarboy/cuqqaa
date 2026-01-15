@@ -15,6 +15,7 @@ let ctx: gsap.Context | null = null
 
 onMounted(() => {
   if (!sectionRef.value || !cardsRef.value) return
+  const sectionEl = sectionRef.value
 
   ctx = gsap.context(() => {
     if (titleRef.value) {
@@ -27,7 +28,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -35,14 +36,14 @@ onMounted(() => {
       })
     }
     if (titleRef.value) {
-      drift(titleRef.value, { trigger: sectionRef.value, yPercent: -10 })
+      drift(titleRef.value, { trigger: sectionEl, yPercent: -10 })
     }
     if (cardsRef.value) {
-      drift(cardsRef.value, { trigger: sectionRef.value, yPercent: 6, xPercent: -2 })
+      drift(cardsRef.value, { trigger: sectionEl, yPercent: 6, xPercent: -2 })
     }
     const cards = cardsRef.value!.querySelectorAll('.testimonial-card')
     reveal(cards, {
-      trigger: sectionRef.value,
+      trigger: sectionEl,
       start: 'top 70%',
       end: 'top 40%',
       scrub: true,

@@ -14,8 +14,8 @@ const titleRef = ref<HTMLElement | null>(null)
 const subRef = ref<HTMLElement | null>(null)
 const widgetRef = ref<HTMLElement | null>(null)
 const openMenu = ref<'from' | 'to' | null>(null)
-const fromCurrency = ref<string>(props.exchange.currencies[0])
-const toCurrency = ref<string>(props.exchange.currencies[1])
+const fromCurrency = ref<string>(props.exchange.currencies[0] ?? 'EUR')
+const toCurrency = ref<string>(props.exchange.currencies[1] ?? props.exchange.currencies[0] ?? 'USD')
 let ctx: gsap.Context | null = null
 
 const toggleMenu = (menu: 'from' | 'to') => {
@@ -33,6 +33,7 @@ const selectCurrency = (menu: 'from' | 'to', value: string) => {
 
 onMounted(() => {
   if (!sectionRef.value || !widgetRef.value) return
+  const sectionEl = sectionRef.value
 
   ctx = gsap.context(() => {
     if (titleRef.value) {
@@ -45,7 +46,7 @@ onMounted(() => {
         stagger: 0.5,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -54,7 +55,7 @@ onMounted(() => {
     }
     if (subRef.value) {
       reveal(subRef.value, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
@@ -62,7 +63,7 @@ onMounted(() => {
       })
     }
     if (contentRef.value) {
-      drift(contentRef.value, { trigger: sectionRef.value, yPercent: -8 })
+      drift(contentRef.value, { trigger: sectionEl, yPercent: -8 })
     }
     if (widgetRef.value) {
       gsap.fromTo(
@@ -74,7 +75,7 @@ onMounted(() => {
           y: 0,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: sectionRef.value,
+            trigger: sectionEl,
             start: 'top 70%',
             end: 'top 40%',
             scrub: true,

@@ -21,10 +21,11 @@ let ctx: gsap.Context | null = null;
 
 onMounted(() => {
   if (!sectionRef.value) return;
+  const sectionEl = sectionRef.value;
 
   ctx = gsap.context(() => {
     reveal([tagRef.value, subtitleRef.value, linkRef.value].filter(Boolean), {
-      trigger: sectionRef.value,
+      trigger: sectionEl,
       start: "top 70%",
       end: "top 40%",
       scrub: true,
@@ -41,7 +42,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: "top 70%",
           end: "top 40%",
           scrub: true,
@@ -58,7 +59,7 @@ onMounted(() => {
           opacity: 1,
           ease: "power1.out",
           scrollTrigger: {
-            trigger: sectionRef.value,
+            trigger: sectionEl,
             start: "top 50%",
             end: "top 20%",
             scrub: true,
@@ -67,13 +68,13 @@ onMounted(() => {
       );
     }
     if (contentRef.value) {
-      drift(contentRef.value, { trigger: sectionRef.value, yPercent: -4 });
+      drift(contentRef.value, { trigger: sectionEl, yPercent: -4 });
     }
 
     if (chipsRef.value) {
       const chips = chipsRef.value.querySelectorAll(".chip");
       reveal(chips, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: "top 70%",
         end: "top 40%",
         scrub: true,

@@ -16,8 +16,8 @@ const lineRef = ref<HTMLElement | null>(null)
 const stepRefs = ref<HTMLElement[]>([])
 let ctx: gsap.Context | null = null
 
-const setStepRef = (el: HTMLElement | null) => {
-  if (el) stepRefs.value.push(el)
+const setStepRef = (el: Element | null) => {
+  if (el instanceof HTMLElement) stepRefs.value.push(el)
 }
 
 onBeforeUpdate(() => {
@@ -26,6 +26,7 @@ onBeforeUpdate(() => {
 
 onMounted(() => {
   if (!sectionRef.value || !lineRef.value) return
+  const sectionEl = sectionRef.value
 
   ctx = gsap.context(() => {
     if (titleRef.value) {
@@ -38,7 +39,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -47,7 +48,7 @@ onMounted(() => {
     }
     if (itemsRef.value) {
       reveal(itemsRef.value, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
@@ -55,10 +56,10 @@ onMounted(() => {
       })
     }
     if (titleRef.value) {
-      drift(titleRef.value, { trigger: sectionRef.value, yPercent: -10 })
+      drift(titleRef.value, { trigger: sectionEl, yPercent: -10 })
     }
     if (itemsRef.value) {
-      drift(itemsRef.value, { trigger: sectionRef.value, yPercent: 6 })
+      drift(itemsRef.value, { trigger: sectionEl, yPercent: 6 })
     }
 
     stepRefs.value.forEach((step) => {
@@ -102,7 +103,7 @@ onMounted(() => {
     }
 
     ScrollTrigger.create({
-      trigger: sectionRef.value,
+      trigger: sectionEl,
       start: 'top 70%',
       end: 'bottom 20%',
       onEnter: () => {

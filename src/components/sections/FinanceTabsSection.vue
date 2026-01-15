@@ -23,15 +23,17 @@ onBeforeUpdate(() => {
   tabRefs.value = []
 })
 
-const setTabRef = (el: HTMLElement | null) => {
-  if (el) tabRefs.value.push(el)
+const setTabRef = (el: Element | null) => {
+  if (el instanceof HTMLElement) tabRefs.value.push(el)
 }
 
-const activeTab = computed(() => props.tabs.items[activeIndex.value])
+const fallbackTab = { label: '', heading: '', description: '' }
+const activeTab = computed(() => props.tabs.items[activeIndex.value] ?? props.tabs.items[0] ?? fallbackTab)
 
 const animateUnderline = () => {
-  if (!underlineRef.value || !tabsRef.value || !tabRefs.value[activeIndex.value]) return
-  underlineMove(underlineRef.value, tabRefs.value[activeIndex.value], tabsRef.value)
+  const activeEl = tabRefs.value[activeIndex.value] ?? tabRefs.value[0]
+  if (!underlineRef.value || !tabsRef.value || !activeEl) return
+  underlineMove(underlineRef.value, activeEl, tabsRef.value)
 }
 
 watch(activeIndex, () => {
@@ -46,6 +48,7 @@ watch(activeIndex, () => {
 
 onMounted(() => {
   if (!sectionRef.value) return
+  const sectionEl = sectionRef.value
   ctx = gsap.context(() => {
     if (titleRef.value) {
       splitText(titleRef.value)
@@ -57,7 +60,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -66,7 +69,7 @@ onMounted(() => {
     }
     if (tabsRef.value) {
       reveal(tabsRef.value, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
@@ -75,7 +78,7 @@ onMounted(() => {
     }
     if (panelRef.value) {
       reveal(panelRef.value, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
@@ -83,13 +86,13 @@ onMounted(() => {
       })
     }
     if (titleRef.value) {
-      drift(titleRef.value, { trigger: sectionRef.value, yPercent: -12 })
+      drift(titleRef.value, { trigger: sectionEl, yPercent: -12 })
     }
     if (tabsRef.value) {
-      drift(tabsRef.value, { trigger: sectionRef.value, yPercent: -6 })
+      drift(tabsRef.value, { trigger: sectionEl, yPercent: -6 })
     }
     if (panelRef.value) {
-      drift(panelRef.value, { trigger: sectionRef.value, yPercent: 8 })
+      drift(panelRef.value, { trigger: sectionEl, yPercent: 8 })
     }
     if (visualRef.value) {
       gsap.fromTo(
@@ -100,7 +103,7 @@ onMounted(() => {
           opacity: 1,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: sectionRef.value,
+            trigger: sectionEl,
             start: 'top 70%',
             end: 'top 40%',
             scrub: true,
@@ -127,7 +130,7 @@ onBeforeUnmount(() => {
             <button
               v-for="(tab, index) in props.tabs.items"
               :key="tab.label"
-              ref="setTabRef"
+              :ref="setTabRef"
               class="tabs__button"
               :class="index === activeIndex ? 'tabs__button--active' : ''"
               type="button"

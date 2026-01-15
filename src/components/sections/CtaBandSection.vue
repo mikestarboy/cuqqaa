@@ -17,6 +17,7 @@ let ctx: gsap.Context | null = null
 
 onMounted(() => {
   if (!sectionRef.value) return
+  const sectionEl = sectionRef.value
 
   ctx = gsap.context(() => {
     if (bgRef.value) {
@@ -39,7 +40,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -48,20 +49,20 @@ onMounted(() => {
     }
 
     reveal([subRef.value, buttonRef.value].filter(Boolean), {
-      trigger: sectionRef.value,
+      trigger: sectionEl,
       start: 'top 70%',
       end: 'top 40%',
       scrub: true,
     })
 
     if (titleRef.value) {
-      drift(titleRef.value, { trigger: sectionRef.value, yPercent: -10, xPercent: -2 })
+      drift(titleRef.value, { trigger: sectionEl, yPercent: -10, xPercent: -2 })
     }
     if (subRef.value) {
-      drift(subRef.value, { trigger: sectionRef.value, yPercent: 6 })
+      drift(subRef.value, { trigger: sectionEl, yPercent: 6 })
     }
     if (buttonRef.value) {
-      drift(buttonRef.value, { trigger: sectionRef.value, yPercent: 10 })
+      drift(buttonRef.value, { trigger: sectionEl, yPercent: 10 })
     }
   }, sectionRef.value)
 })

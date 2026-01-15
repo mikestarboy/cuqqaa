@@ -16,6 +16,7 @@ let ctx: gsap.Context | null = null
 
 onMounted(() => {
   if (!sectionRef.value) return
+  const sectionEl = sectionRef.value
 
   ctx = gsap.context(() => {
     if (titleRef.value) {
@@ -28,7 +29,7 @@ onMounted(() => {
         stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: sectionEl,
           start: 'top 70%',
           end: 'top 40%',
           scrub: true,
@@ -37,7 +38,7 @@ onMounted(() => {
     }
     if (subRef.value) {
       reveal(subRef.value, {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
@@ -45,20 +46,20 @@ onMounted(() => {
       })
     }
     if (titleRef.value) {
-      drift(titleRef.value, { trigger: sectionRef.value, yPercent: -10 })
+      drift(titleRef.value, { trigger: sectionEl, yPercent: -10 })
     }
     if (subRef.value) {
-      drift(subRef.value, { trigger: sectionRef.value, yPercent: 6 })
+      drift(subRef.value, { trigger: sectionEl, yPercent: 6 })
     }
     if (actionsRef.value) {
       reveal(Array.from(actionsRef.value.children), {
-        trigger: sectionRef.value,
+        trigger: sectionEl,
         start: 'top 70%',
         end: 'top 40%',
         scrub: true,
         stagger: 0.12,
       })
-      drift(actionsRef.value, { trigger: sectionRef.value, yPercent: 10 })
+      drift(actionsRef.value, { trigger: sectionEl, yPercent: 10 })
     }
   }, sectionRef.value)
 })
