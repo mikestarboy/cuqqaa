@@ -47,6 +47,12 @@
   }
 }
 
+@media (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @layer components {
   .container {
     max-width: 1160px;
